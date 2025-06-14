@@ -1,31 +1,27 @@
-const express = require("express");
-const app = express();
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const dotenv = require("dotenv");
-dotenv.config();
+const express = require('express')
+const cors = require('cors')
+const cookieParser = require('cookie-parser')
+require('dotenv').config()
+const connectDB = require('./config/db')
+const router = require('./routes')
 
 
-const {dbconnection} = require("./config/db");
-const PORT = process.env.PORT || 8000;
-const dbUrl = process.env.MONGODB_URI;
+const app = express()
+app.use(cors({
+    origin : process.env.FRONTEND_URL,
+    credentials : true
+}))
+app.use(express.json())
+app.use(cookieParser())
 
-dbconnection(dbUrl);
+app.use("/api",router)
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(
-    cors({
-      origin: process.env.CLIENT_URL || "http://localhost:5173",
-      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-      allowedHeaders: ["Content-Type", "Authorization"],
-      credentials: true,
+const PORT = process.env.PORT || 8080
+
+
+connectDB().then(()=>{
+    app.listen(PORT,()=>{
+        console.log("Successfully connected to DATABASE")
+        console.log("Server is running On PORT : "+PORT)
     })
-  );
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-    }
-);
-
+})
