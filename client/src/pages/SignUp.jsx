@@ -3,7 +3,7 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
-import imageTobase64 from '../helpers/imageTobase64';
+import imageTobase64 from '../helpers/imagetobase64';
 import SummaryApi from '../common';
 import { toast } from 'react-toastify';
 
