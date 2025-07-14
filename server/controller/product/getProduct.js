@@ -2,7 +2,7 @@ const productModel = require("../../models/productModel")
 
 const getProductController = async(req,res)=>{
     try{
-        const allProduct = await productModel.find().({ createdAt : -1 })
+        const allProduct = await productModel.find({ createdAt: -1 });
 
         res.json({
             message : "All Product",
